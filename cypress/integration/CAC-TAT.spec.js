@@ -93,3 +93,9 @@ describe("exibe mensagem de erro ao submeter o formulário sem preencher os camp
     cy.get("span.error").should("be.visible");
   });
 });
+
+describe("envia o formuário com sucesso usando um comando customizado", () => {
+  it("deve submeter o form com sucesso", () => {
+    cy.submitFormDefault();
+  });
+});

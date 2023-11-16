@@ -23,3 +23,19 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("submitFormDefault", () => {
+  cy.get("#firstName").type("Leonardo").should("have.value", "Leonardo");
+  cy.get("#lastName")
+    .type("Bernardo Lima")
+    .should("have.value", "Bernardo Lima");
+  cy.get("#email")
+    .type("leonardo.b.lima1@gmail.com", { delay: 0 })
+    .should("have.value", "leonardo.b.lima1@gmail.com");
+  cy.get("#open-text-area")
+    .type("Preciso de ajuda com a validacao de um formulario")
+    .should("have.value", "Preciso de ajuda com a validacao de um formulario");
+
+  cy.get(".button").click();
+  cy.get("span.success").should("be.visible");
+});
