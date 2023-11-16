@@ -66,3 +66,23 @@ describe("exibe mensagem de erro quando o telefone se torna obrigatório mas nã
     cy.get("span.error").should("be.visible");
   });
 });
+
+describe("preenche e limpa os campos nome, sobrenome, email e telefone", () => {
+  it("Deve limpar os campos apos a digitacao", () => {
+    cy.get("#firstName")
+      .type("Leonardo")
+      .should("have.value", "Leonardo")
+      .clear()
+      .should("have.value", "");
+    cy.get("#lastName")
+      .type("Bernardo Lima")
+      .should("have.value", "Bernardo Lima")
+      .clear()
+      .should("have.value", "");
+    cy.get("#email")
+      .type("leonardo.b.lima1@gmail.com")
+      .should("have.value", "leonardo.b.lima1@gmail.com")
+      .clear()
+      .should("have.value", "");
+  });
+});
