@@ -17,7 +17,7 @@ describe("preenche os campos obrigatórios e envia o formulário", () => {
       .type("Bernardo Lima")
       .should("have.value", "Bernardo Lima");
     cy.get("#email")
-      .type("leonardo.b.lima1@gmail.com")
+      .type("leonardo.b.lima1@gmail.com", { delay: 0 })
       .should("have.value", "leonardo.b.lima1@gmail.com");
     cy.get("#open-text-area")
       .type("Preciso de ajuda com a validacao de um formulario")
@@ -28,5 +28,13 @@ describe("preenche os campos obrigatórios e envia o formulário", () => {
 
     cy.get(".button").click();
     cy.get("span.success").should("be.visible");
+  });
+});
+
+describe("exibe mensagem de erro ao submeter o formulário com um email com formatação inválida", () => {
+  it("Deve apresenter a mensagem de erro", () => {
+    cy.get("#email").type("leonardo.b.lima1.gmail.com", { delay: 0 });
+    cy.get(".button").click();
+    cy.get("span.error").should("be.visible");
   });
 });
