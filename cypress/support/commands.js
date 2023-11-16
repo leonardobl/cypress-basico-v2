@@ -24,7 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add("submitFormDefault", () => {
+Cypress.Commands.add("fillMandatoryFieldsAndSubmit", () => {
   cy.get("#firstName").type("Leonardo").should("have.value", "Leonardo");
   cy.get("#lastName")
     .type("Bernardo Lima")
@@ -36,6 +36,6 @@ Cypress.Commands.add("submitFormDefault", () => {
     .type("Preciso de ajuda com a validacao de um formulario")
     .should("have.value", "Preciso de ajuda com a validacao de um formulario");
 
-  cy.get(".button").click();
+  cy.contains("button", "Enviar").click();
   cy.get("span.success").should("be.visible");
 });

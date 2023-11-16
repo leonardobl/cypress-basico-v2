@@ -26,7 +26,7 @@ describe("preenche os campos obrigatórios e envia o formulário", () => {
         "Preciso de ajuda com a validacao de um formulario"
       );
 
-    cy.get(".button").click();
+    cy.contains("button", "Enviar").click();
     cy.get("span.success").should("be.visible");
   });
 });
@@ -34,7 +34,7 @@ describe("preenche os campos obrigatórios e envia o formulário", () => {
 describe("exibe mensagem de erro ao submeter o formulário com um email com formatação inválida", () => {
   it("Deve apresenter a mensagem de erro", () => {
     cy.get("#email").type("leonardo.b.lima1.gmail.com", { delay: 0 });
-    cy.get(".button").click();
+    cy.contains("button", "Enviar").click();
     cy.get("span.error").should("be.visible");
   });
 });
@@ -62,7 +62,7 @@ describe("exibe mensagem de erro quando o telefone se torna obrigatório mas nã
         "Preciso de ajuda com a validacao de um formulario"
       );
 
-    cy.get(".button").click();
+    cy.contains("button", "Enviar").click();
     cy.get("span.error").should("be.visible");
   });
 });
@@ -89,13 +89,13 @@ describe("preenche e limpa os campos nome, sobrenome, email e telefone", () => {
 
 describe("exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios", () => {
   it("Deve apresentar a mensagem de erro ao clicar no botao enviar", () => {
-    cy.get(".button").click();
+    cy.contains("button", "Enviar").click();
     cy.get("span.error").should("be.visible");
   });
 });
 
 describe("envia o formuário com sucesso usando um comando customizado", () => {
   it("deve submeter o form com sucesso", () => {
-    cy.submitFormDefault();
+    cy.fillMandatoryFieldsAndSubmit();
   });
 });
