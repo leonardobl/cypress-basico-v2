@@ -38,3 +38,9 @@ describe("exibe mensagem de erro ao submeter o formulário com um email com form
     cy.get("span.error").should("be.visible");
   });
 });
+
+describe("O campo telefone so deve apresentar valores numericos", () => {
+  it("So deve aceitar valores numericos", () => {
+    cy.get("#phone").type("Leonardo").should("have.value", "");
+  });
+});
