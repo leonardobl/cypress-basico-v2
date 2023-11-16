@@ -86,3 +86,10 @@ describe("preenche e limpa os campos nome, sobrenome, email e telefone", () => {
       .should("have.value", "");
   });
 });
+
+describe("exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios", () => {
+  it("Deve apresentar a mensagem de erro ao clicar no botao enviar", () => {
+    cy.get(".button").click();
+    cy.get("span.error").should("be.visible");
+  });
+});
