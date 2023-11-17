@@ -97,5 +97,12 @@ describe("exibe mensagem de erro ao submeter o formulário sem preencher os camp
 describe("envia o formuário com sucesso usando um comando customizado", () => {
   it("deve submeter o form com sucesso", () => {
     cy.fillMandatoryFieldsAndSubmit();
+    cy.get("span.success").should("be.visible");
+  });
+});
+
+describe("seleciona um produto (YouTube) por seu texto", () => {
+  it("Deve selecionar uma opcao youtube", () => {
+    cy.get("#product").select("youtube");
   });
 });

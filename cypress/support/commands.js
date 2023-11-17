@@ -37,5 +37,4 @@ Cypress.Commands.add("fillMandatoryFieldsAndSubmit", () => {
     .should("have.value", "Preciso de ajuda com a validacao de um formulario");
 
   cy.contains("button", "Enviar").click();
-  cy.get("span.success").should("be.visible");
 });
