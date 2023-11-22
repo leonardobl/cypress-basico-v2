@@ -8,10 +8,8 @@ describe("Central de atendimento ao cliente TAT", () => {
   it("verifica o titulo da aplicacao", () => {
     cy.title().should("be.equal", "Central de Atendimento ao Cliente TAT");
   });
-});
 
-describe("preenche os campos obrigatórios e envia o formulário", () => {
-  it("Deve apresentar o primeiro nome", () => {
+  it("preenche os campos obrigatórios e envia o formulário", () => {
     cy.get("#firstName").type("Leonardo").should("have.value", "Leonardo");
     cy.get("#lastName")
       .type("Bernardo Lima")
@@ -29,24 +27,18 @@ describe("preenche os campos obrigatórios e envia o formulário", () => {
     cy.contains("button", "Enviar").click();
     cy.get("span.success").should("be.visible");
   });
-});
 
-describe("exibe mensagem de erro ao submeter o formulário com um email com formatação inválida", () => {
-  it("Deve apresenter a mensagem de erro", () => {
+  it("exibe mensagem de erro ao submeter o formulário com um email com formatação inválida", () => {
     cy.get("#email").type("leonardo.b.lima1.gmail.com", { delay: 0 });
     cy.contains("button", "Enviar").click();
     cy.get("span.error").should("be.visible");
   });
-});
 
-describe("O campo telefone so deve apresentar valores numericos", () => {
-  it("So deve aceitar valores numericos", () => {
+  it("O campo telefone so deve apresentar valores numericos", () => {
     cy.get("#phone").type("Leonardo").should("have.value", "");
   });
-});
 
-describe("exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário", () => {
-  it("Deve apresentar a mensagem de obrigatoriedade do envio do telefone", () => {
+  it("exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário", () => {
     cy.get("#firstName").type("Leonardo").should("have.value", "Leonardo");
     cy.get("#lastName")
       .type("Bernardo Lima")
@@ -65,10 +57,8 @@ describe("exibe mensagem de erro quando o telefone se torna obrigatório mas nã
     cy.contains("button", "Enviar").click();
     cy.get("span.error").should("be.visible");
   });
-});
 
-describe("preenche e limpa os campos nome, sobrenome, email e telefone", () => {
-  it("Deve limpar os campos apos a digitacao", () => {
+  it("preenche e limpa os campos nome, sobrenome, email e telefone", () => {
     cy.get("#firstName")
       .type("Leonardo")
       .should("have.value", "Leonardo")
@@ -85,24 +75,50 @@ describe("preenche e limpa os campos nome, sobrenome, email e telefone", () => {
       .clear()
       .should("have.value", "");
   });
-});
 
-describe("exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios", () => {
-  it("Deve apresentar a mensagem de erro ao clicar no botao enviar", () => {
+  it("exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios", () => {
     cy.contains("button", "Enviar").click();
     cy.get("span.error").should("be.visible");
   });
-});
 
-describe("envia o formuário com sucesso usando um comando customizado", () => {
-  it("deve submeter o form com sucesso", () => {
+  it("envia o formuário com sucesso usando um comando customizado", () => {
     cy.fillMandatoryFieldsAndSubmit();
     cy.get("span.success").should("be.visible");
   });
-});
 
-describe("seleciona um produto (YouTube) por seu texto", () => {
-  it("Deve selecionar uma opcao youtube", () => {
+  it("seleciona um produto (YouTube) por seu texto", () => {
     cy.get("#product").select("youtube");
+  });
+
+  it("marca o tipo de atendimento 'Feedback'", () => {
+    cy.get("input[type='radio'][value='feedback']")
+      .check()
+      .should("have.value", "feedback");
+  });
+
+  it("marca cada tipo de atendimento", () => {
+    cy.get("input[type='radio']").each((input) => {
+      cy.wrap(input).check().should("be.checked");
+    });
+  });
+
+  it("marca ambos checkboxes, depois desmarca o último", () => {
+    cy.get("input[type='checkbox']").as("checks").check();
+    cy.get("@checks").each((inp) => {
+      cy.wrap(inp).should("be.checked");
+    });
+
+    cy.get("@checks").last().uncheck().should("not.be.checked");
+  });
+
+  it("exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário", () => {
+    cy.get("input[type='checkbox'][value='phone']")
+      .as("checkPhone")
+      .check()
+      .should("be.checked");
+
+    cy.get("#phone").should("have.value", "");
+    cy.get("button[type='submit']").click();
+    cy.get(".error").should("be.visible");
   });
 });
