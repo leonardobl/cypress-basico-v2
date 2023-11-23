@@ -137,7 +137,7 @@ describe("Central de atendimento ao cliente TAT", () => {
         },
         { action: "drag-drop" }
       )
-      .then((inp) => {
+      .should((inp) => {
         expect(inp[0].files[0].name).to.be.equal("example.json");
       });
   });
@@ -146,6 +146,12 @@ describe("Central de atendimento ao cliente TAT", () => {
     cy.fixture("example.json").as("exampleFile");
     cy.get("input[type='file']")
       .selectFile("@exampleFile")
-      .then((inp) => expect(inp[0].files[0].name).to.be.equal("example.json"));
+      .should((inp) =>
+        expect(inp[0].files[0].name).to.be.equal("example.json")
+      );
+  });
+
+  it("verifica que a política de privacidade abre em outra aba sem a necessidade de um clique", () => {
+    cy.get("a").should("have.attr", "target", "_blank");
   });
 });
