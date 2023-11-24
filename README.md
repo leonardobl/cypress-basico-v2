@@ -44,25 +44,25 @@ Caso utilize yarn (Teste para versão Mobile headless):
 yarn test-mobile
 ```
 
-Caso utilize npm (Teste para versão desktop):
+Caso utilize npm (Teste para versão desktop interativo):
 
 ```
 npm run cy:open
 ```
 
-Caso utilize yarn (Teste para versão desktop):
+Caso utilize yarn (Teste para versão desktop interativo):
 
 ```
 yarn cy:open
 ```
 
-Caso utilize npm (Teste para versão mobile):
+Caso utilize npm (Teste para versão mobile interativo):
 
 ```
 npm run cy:open-mobile
 ```
 
-Caso utilize yarn (Teste para versão mobile):
+Caso utilize yarn (Teste para versão mobile interativo):
 
 ```
 yarn cy:open-mobile
