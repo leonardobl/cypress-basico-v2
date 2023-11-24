@@ -171,4 +171,58 @@ describe("Central de atendimento ao cliente TAT", () => {
       "Central de Atendimento ao Cliente TAT - Política de privacidade"
     );
   });
+
+  it("Executando o envio do formulario 5 vezes", () => {
+    Cypress._.times(5, () => {
+      cy.clock();
+      cy.fillMandatoryFieldsAndSubmit();
+      cy.tick(3000);
+    });
+  });
+
+  it("exibe e esconde as mensagens de sucesso e erro usando o .invoke()", () => {
+    cy.get(".success")
+      .should("not.be.visible")
+      .invoke("show")
+      .should("be.visible")
+      .and("contain", "Mensagem enviada com sucesso.")
+      .invoke("hide")
+      .should("not.be.visible");
+
+    cy.get(".error")
+      .should("not.be.visible")
+      .invoke("show")
+      .should("be.visible")
+      .and("contain", "Valide os campos obrigatórios!")
+      .invoke("hide")
+      .should("not.be.visible");
+  });
+
+  it("preenche a area de texto usando o comando invokepreenche a area de texto usando o comando invoke", () => {
+    cy.get("#firstName")
+      .should("have.value", "")
+      .invoke("val", "Leonardo Lima")
+      .should("have.value", "Leonardo Lima");
+
+    const longString = Cypress._.repeat(
+      "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit... ",
+      20
+    );
+
+    cy.get("#open-text-area")
+      .should("have.value", "")
+      .invoke("val", longString)
+      .should("have.value", longString);
+  });
+
+  it("faz uma requisição HTTP", () => {
+    cy.request({
+      method: "GET",
+      url: "https://cac-tat.s3.eu-central-1.amazonaws.com/index.html",
+    }).should((res) => {
+      expect(res.status).to.equal(200);
+      expect(res.statusText).to.equal("OK");
+      expect(res.body).contains("CAC TAT");
+    });
+  });
 });
