@@ -225,4 +225,8 @@ describe("Central de atendimento ao cliente TAT", () => {
       expect(res.body).contains("CAC TAT");
     });
   });
+
+  it("Encontrar o gato na aplicação", () => {
+    cy.get("#cat").should("be.hidden").invoke("show").should("be.visible");
+  });
 });
